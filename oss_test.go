@@ -13,11 +13,19 @@ import (
 
 func TestA(t *testing.T) {
 	t.Log("111 ", config.Endpoint)
+
+	bucket, _ := NewBucket(config)
+	url, err := bucket.SignURL("images/20201225/ud.png", oss.HTTPGet, 3600)
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(url)
 }
 
 // Put 上传文件
 func Put(bucket *oss.Bucket, key string, file []byte) (err error) {
 	//bucket.Client.SetBucketACL()
+
 	return bucket.PutObject(key, bytes.NewReader(file), oss.Option(nil))
 }
 

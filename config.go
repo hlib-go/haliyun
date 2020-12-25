@@ -2,11 +2,12 @@ package haliyunoss
 
 // 阿里云配置，从阿里云平台获取
 type Config struct {
-	Endpoint        string `json:"endpoint"`          // OSS endpoint
-	RegionId        string `json:"region_id"`         //regionId
+	Endpoint        string `json:"endpoint"` // OSS endpoint
+	Cname           bool   `json:"cname"`    // 是否使用自定义域名
+	Bucket          string `json:"bucket"`
 	AccessKeyID     string `json:"access_key_id"`     // AccessId
 	AccessKeySecret string `json:"access_key_secret"` // AccessKey
-	Bucket          string `json:"bucket"`
+	RegionId        string `json:"region_id"`         // regionId
 	Sts             *StsConfig
 }
 

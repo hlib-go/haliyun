@@ -4,8 +4,8 @@ import (
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 )
 
-func New(config *Config, options ...oss.ClientOption) (*oss.Client, error) {
-	return oss.New(config.Endpoint, config.AccessKeyID, config.AccessKeySecret, options...)
+func New(config *Config) (*oss.Client, error) {
+	return oss.New(config.Endpoint, config.AccessKeyID, config.AccessKeySecret, oss.UseCname(config.Cname))
 }
 
 func NewBucket(config *Config) (*oss.Bucket, error) {

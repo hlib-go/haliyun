@@ -12,11 +12,12 @@ import (
 )
 
 func TestA(t *testing.T) {
-	t.Log("111")
+	t.Log("111 ", config.Endpoint)
 }
 
 // Put 上传文件
 func Put(bucket *oss.Bucket, key string, file []byte) (err error) {
+	//bucket.Client.SetBucketACL()
 	return bucket.PutObject(key, bytes.NewReader(file), oss.Option(nil))
 }
 

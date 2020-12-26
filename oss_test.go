@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"net/http"
+	"net/url"
 	"testing"
 )
 
@@ -15,11 +16,24 @@ func TestA(t *testing.T) {
 	t.Log("111 ", config.Endpoint)
 
 	bucket, _ := NewBucket(config)
-	url, err := bucket.SignURL("images/20201225/ud.png", oss.HTTPGet, 3600)
+	signurl, err := bucket.SignURL("images/20201225/ud.png", oss.HTTPGet, 3600)
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(url)
+	t.Log(signurl)
+
+	// http://oss.himkt.cn/images%2F20201225%2Fud.png?Expires=1608967931&OSSAccessKeyId=LTAI4GBRkBG5Sn5sZNDvbhAc&Signature=FgN1tJWz384VqCaoZfEJ8Ryn%2FqQ%3D
+	unescapeUrl, _ := url.PathUnescape(signurl)
+	t.Log("unescapeUrl:  ", unescapeUrl)
+	urlp, _ := url.Parse(unescapeUrl)
+	t.Log("urlp.Path = ", urlp.Path)
+	t.Log("urlp.RequestURI() ", urlp.RequestURI())
+	t.Log("urlp.Host ", urlp.Host)
+
+	t.Log("urlp.Scheme+urlp.Host+urlp.Path ", urlp.Scheme+"://"+urlp.Host+urlp.Path)
+	up, _ := url.Parse(urlp.Scheme + "://" + urlp.Host + urlp.Path)
+	t.Log("up.Path ", up.Path)
+
 }
 
 // Put 上传文件

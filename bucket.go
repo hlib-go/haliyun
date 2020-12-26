@@ -25,6 +25,9 @@ func SignURL(bucket *oss.Bucket, bucketPath string) (fileUrl string, err error) 
 // 参数为可访问的链接
 // 返回存储格式链接
 func ParseURL(fileUrl string) (bucketPath string, err error) {
+	if fileUrl == "" {
+		return
+	}
 	fileUrl, err = url.PathUnescape(fileUrl)
 	if err != nil {
 		return
